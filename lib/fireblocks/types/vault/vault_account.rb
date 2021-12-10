@@ -1,7 +1,7 @@
 module Fireblocks
   module Types
     module Vault
-      class VaultAccount.rb < Type
+      class VaultAccount < Type
         property :id
         property :name
         property :hidden_on_ui
