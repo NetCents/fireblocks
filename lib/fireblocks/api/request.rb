@@ -14,12 +14,12 @@ module Fireblocks
         new(path: path).put(body)
       end
 
-      def post(path:, body: {})
-        new(path: path).post(body)
+      def post(path:, body: {}, idempotency_key: nil)
+        new(path: path, idempotency_key: idempotency_key).post(body)
       end
     end
 
-    attr_accessor :path, :uri
+    attr_accessor :path, :uri, :idempotency_key
 
     def initialize(path:)
       @path = path
@@ -41,9 +41,11 @@ module Fireblocks
       valid_response!(send_request(req), request: req)
     end
 
-    def post(body)
+    def post(body, idempotency_key: nil)
+      @idempotency_key = idempotency_key
       req = Net::HTTP::Post.new(uri)
       request_headers(body).each { |rk, rv| req[rk] = rv }
+      req['Idempotency-Key'] = idempotency_key if idempotency_key
       req.body = body.to_json
 
       valid_response!(send_request(req), request: req)
