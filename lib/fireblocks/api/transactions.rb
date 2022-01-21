@@ -98,6 +98,10 @@ module Fireblocks
             }.compact
           }
         end
+
+        def get_transaction_by_id(id)
+          Fireblocks::Request.get(path: "/v1/transactions/#{id}")
+        end
       end
     end
   end
