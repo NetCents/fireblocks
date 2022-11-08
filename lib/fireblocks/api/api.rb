@@ -60,6 +60,10 @@ module Fireblocks
         )
       end
 
+      def get_fee_for_asset(asset_id)
+        Request.get(path: "/v1/estimate_network_fee?assetId=#{asset_id}")
+      end
+
       def get_internal_wallet(wallet_id)
         Request.get(path: "/v1/internal_wallets/#{wallet_id}")
       end
