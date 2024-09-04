@@ -79,6 +79,10 @@ module Fireblocks
       def get_supported_assets
         Request.get(path: '/v1/supported_assets')
       end
+
+      def validate_address(assetId:, address:)
+        Request.get(path: "/v1/transactions/validate_address/#{assetId}/#{address}")
+      end 
     end
   end
 end
