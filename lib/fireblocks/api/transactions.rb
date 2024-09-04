@@ -102,6 +102,20 @@ module Fireblocks
         def get_transaction_by_id(id)
           Fireblocks::Request.get(path: "/v1/transactions/#{id}")
         end
+
+        def estimate_fee_for_transaction(asset_id:, amount:, source_id:, destination:)
+          body = {
+            amount: amount,
+            assetId: asset_id,
+            source: {
+              type: VAULT_ACCOUNT,
+              id: source_id
+            },
+            destination: destination
+          }.compact
+
+          Fireblocks::Request.post(body: body.slice(*VALID_TRANSACTION_KEYS), path: '/v1/transactions/estimate_fee')
+        end
       end
     end
   end
